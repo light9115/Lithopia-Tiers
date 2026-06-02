@@ -1,229 +1,162 @@
-index.html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lithopia Rankings</title>
-
+<title>Lithopia Tiers V2</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
-
-body{
-    background:#07111f;
-    color:white;
-}
-
-.navbar{
-    height:70px;
-    background:#0c1728;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 30px;
-    border-bottom:1px solid #16263f;
-}
-
-.logo{
-    font-size:32px;
-    font-weight:bold;
-    color:#53ff77;
-}
-
-.search{
-    width:300px;
-    padding:12px;
-    border:none;
-    border-radius:25px;
-    background:#111f34;
-    color:white;
-}
-
-.banner{
-    margin:20px;
-    padding:15px;
-    background:#12233b;
-    border-radius:12px;
-    text-align:center;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.rankings{
-    width:95%;
-    margin:auto;
-}
-
-.player{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    background:#0d1b30;
-    margin-bottom:12px;
-    padding:18px;
-
-    border-radius:14px;
-    transition:.2s;
-}
-
-.player:hover{
-    transform:translateY(-2px);
-}
-
-.left{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.rank{
-    width:60px;
-    font-size:30px;
-    font-weight:bold;
-}
-
-.head{
-    width:64px;
-    height:64px;
-    border-radius:10px;
-}
-
-.info h2{
-    margin-bottom:4px;
-}
-
-.info p{
-    color:#8fa8d4;
-}
-
-.tier{
-    padding:10px 18px;
-    border-radius:20px;
-    font-weight:bold;
-}
-
-.ht1{
-    background:#ffd700;
-    color:black;
-}
-
-.lt1{
-    background:#c0c0c0;
-    color:black;
-}
-
-.ht2{
-    background:#ff944d;
-}
-
-.lt2{
-    background:#70a7ff;
-}
-
-.ht3{
-    background:#b56cff;
-}
-
-.lt3{
-    background:#55d17a;
-}
-
-.ht4{
-    background:#ff6b6b;
-}
-
-.lt4{
-    background:#999;
-}
-
-.ht5{
-    background:#666;
-}
-
-.lt5{
-    background:#444;
-}
+body{margin:0;background:#07111f;color:white;font-family:Arial,sans-serif}
+header{background:#0d1b30;padding:20px;text-align:center}
+h1{margin:0;color:#63ff93}
+.banner{background:#12233b;margin:15px auto;padding:12px;border-radius:12px;width:90%;text-align:center}
+#search{display:block;width:90%;max-width:500px;margin:10px auto;padding:12px;border-radius:25px;border:none;background:#12233b;color:white}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:10px}
+.tab{background:#12233b;color:white;border:none;padding:10px 15px;border-radius:20px;cursor:pointer}
+.active{background:#63ff93;color:black;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:15px}
+.card{display:flex;justify-content:space-between;align-items:center;background:#0d1b30;padding:15px;border-radius:14px;margin-bottom:12px}
+.left{display:flex;align-items:center;gap:12px}
+.head{width:64px;height:64px;border-radius:10px}
+.name{font-size:20px;font-weight:bold}
+.desc{color:#a9b7d1}
+.tier{background:#12233b;padding:8px 14px;border-radius:18px;font-weight:bold}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7)}
+.modal-content{background:#0d1b30;width:90%;max-width:500px;margin:80px auto;padding:20px;border-radius:15px}
+.close{float:right;cursor:pointer}
 </style>
 </head>
 <body>
 
-<div class="navbar">
-    <div class="logo">⚡ LITHOPIA</div>
-    <input class="search" placeholder="Search player...">
+<header><h1>⚡ LITHOPIA TIERS ⚡</h1></header>
+<div class="banner">Server IP: COMING SOON!</div>
+
+<input id="search" placeholder="Search players...">
+
+<div class="tabs" id="tabs"></div>
+<div class="container" id="players"></div>
+
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">✖</span>
+<div id="modalBody"></div>
+</div>
 </div>
 
-<div class="banner">
-    SERVER IP: COMING SOON!
-</div>
+<script>
+const modes=["⚔️ Sword","🪓 Axe","💠 Diamond SMP","🧪 Diamond Pot","💎 Crystal","🏹 UHC","🔥 NethPot","🔨 Mace"];
 
-<div class="rankings">
+const rankings={
+"⚔️ Sword":[
+{name:"Abhiru",tier:"HT1"},
+{name:"Steve",tier:"LT1"},
+{name:"Alex",tier:"HT2"}
+],
+"🪓 Axe":[
+{name:"Abhiru",tier:"HT2"},
+{name:"Warrior",tier:"LT2"}
+],
+"💠 Diamond SMP":[
+{name:"Abhiru",tier:"LT1"},
+{name:"Builder",tier:"HT3"}
+],
+"🧪 Diamond Pot":[
+{name:"PotionKing",tier:"HT1"}
+],
+"💎 Crystal":[
+{name:"CrystalGod",tier:"HT1"},
+{name:"Abhiru",tier:"HT4"}
+],
+"🏹 UHC":[
+{name:"Hunter",tier:"HT2"}
+],
+"🔥 NethPot":[
+{name:"FirePvP",tier:"HT3"}
+],
+"🔨 Mace":[
+{name:"MaceLord",tier:"HT1"}
+]
+};
 
-<div class="player">
+const pts={LT5:1,HT5:2,LT4:3,HT4:4,LT3:5,HT3:6,LT2:7,HT2:8,LT1:9,HT1:10};
+
+function titleFromPoints(p){
+if(p<=20)return"Combat Novice";
+if(p<=35)return"Combat Apprentice";
+if(p<=50)return"Combat Fighter";
+if(p<=65)return"Combat Veteran";
+if(p<=80)return"Combat Elite";
+if(p<=95)return"Combat Master";
+return"Combat Legend";
+}
+
+function totalPoints(name){
+let t=0;
+for(let m in rankings){
+rankings[m].forEach(p=>{if(p.name===name)t+=pts[p.tier]||0;});
+}
+return t;
+}
+
+let current=modes[0];
+const tabs=document.getElementById("tabs");
+
+modes.forEach(m=>{
+let b=document.createElement("button");
+b.className="tab";
+if(m===current)b.classList.add("active");
+b.textContent=m;
+b.onclick=()=>{
+current=m;
+document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+b.classList.add("active");
+render();
+};
+tabs.appendChild(b);
+});
+
+function showProfile(name){
+let html=`<h2>${name}</h2><hr>`;
+for(let m in rankings){
+let found=rankings[m].find(x=>x.name===name);
+if(found) html+=`<p>${m}: <b>${found.tier}</b></p>`;
+}
+html+=`<p><b>${titleFromPoints(totalPoints(name))}</b> (${totalPoints(name)} Points)</p>`;
+document.getElementById("modalBody").innerHTML=html;
+document.getElementById("modal").style.display="block";
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+function render(){
+const q=document.getElementById("search").value.toLowerCase();
+const area=document.getElementById("players");
+area.innerHTML="";
+
+(rankings[current]||[])
+.filter(p=>p.name.toLowerCase().includes(q))
+.forEach(p=>{
+let points=totalPoints(p.name);
+let card=document.createElement("div");
+card.className="card";
+card.onclick=()=>showProfile(p.name);
+card.innerHTML=`
 <div class="left">
-<div class="rank">#1</div>
-<img class="head" src="https://mc-heads.net/avatar/Technoblade">
-<div class="info">
-<h2>Technoblade</h2>
-<p>Combat Master</p>
+<img class="head" src="https://mc-heads.net/avatar/${p.name}">
+<div>
+<div class="name">${p.name}</div>
+<div class="desc">${titleFromPoints(points)} (${points} Points)</div>
 </div>
 </div>
-<div class="tier ht1">HT1</div>
-</div>
+<div class="tier">${p.tier}</div>`;
+area.appendChild(card);
+});
+}
 
-<div class="player">
-<div class="left">
-<div class="rank">#2</div>
-<img class="head" src="https://mc-heads.net/avatar/Dream">
-<div class="info">
-<h2>Dream</h2>
-<p>Combat Master</p>
-</div>
-</div>
-<div class="tier lt1">LT1</div>
-</div>
-
-<div class="player">
-<div class="left">
-<div class="rank">#3</div>
-<img class="head" src="https://mc-heads.net/avatar/Sapnap">
-<div class="info">
-<h2>Sapnap</h2>
-<p>Combat Expert</p>
-</div>
-</div>
-<div class="tier ht2">HT2</div>
-</div>
-
-<div class="player">
-<div class="left">
-<div class="rank">#4</div>
-<img class="head" src="https://mc-heads.net/avatar/GeorgeNotFound">
-<div class="info">
-<h2>GeorgeNotFound</h2>
-<p>Combat Expert</p>
-</div>
-</div>
-<div class="tier lt2">LT2</div>
-</div>
-
-<div class="player">
-<div class="left">
-<div class="rank">#5</div>
-<img class="head" src="https://mc-heads.net/avatar/TommyInnit">
-<div class="info">
-<h2>TommyInnit</h2>
-<p>Combat Veteran</p>
-</div>
-</div>
-<div class="tier ht3">HT3</div>
-</div>
-
-</div>
+document.getElementById("search").addEventListener("input",render);
+render();
+</script>
 
 </body>
 </html>
